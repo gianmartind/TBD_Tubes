@@ -13,7 +13,7 @@ AS
 
 	INSERT INTO @temp
 	SELECT kata
-	FROM split_string(@input, ';')
+	FROM split_string(@input, '&')
 
 	DECLARE @querySELECT nvarchar(400)
 	SET @querySELECT = 'SELECT idPendaftaran, tanggalWaktu, nik, nama, namaFaskes '
@@ -45,7 +45,7 @@ AS
 		DECLARE cursorSplit CURSOR
 		FOR 
 		SELECT value
-		FROM string_split(@temp_input, '|')
+		FROM string_split(@temp_input, ' ')
 
 		OPEN cursorSplit
 
@@ -79,5 +79,5 @@ AS
 	EXEC sp_executesql @query
 
 
-EXEC cariData 'namaFaskes|=|RS Bandung;nik|=|1;tanggalWaktu|<|2021-06-25'
+EXEC cariData 'namaFaskes|=|RS Bandung&nik|=|&;tanggalWaktu|<|2021-06-25'
 
