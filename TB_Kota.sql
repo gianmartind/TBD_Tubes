@@ -1,0 +1,28 @@
+USE [master]
+GO
+
+/****** Object:  Table [dbo].[TB_Kota]    Script Date: 22/06/2021 20:06:29 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[TB_Kota](
+	[idKota] [int] IDENTITY(1,1) NOT NULL,
+	[namaKota] [varchar](50) NOT NULL,
+	[fk_idProvinsi] [int] NOT NULL,
+ CONSTRAINT [PK_TB_Kota] PRIMARY KEY CLUSTERED 
+(
+	[idKota] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[TB_Kota]  WITH CHECK ADD  CONSTRAINT [FK_TB_Kota_idProvinsi] FOREIGN KEY([fk_idProvinsi])
+REFERENCES [dbo].[TB_Provinsi] ([idProvinsi])
+GO
+
+ALTER TABLE [dbo].[TB_Kota] CHECK CONSTRAINT [FK_TB_Kota_idProvinsi]
+GO
+
