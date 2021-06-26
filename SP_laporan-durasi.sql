@@ -26,11 +26,11 @@ AS
 		@temp_vaksin time
 
 	OPEN cursorDurasi
-
+	--iterasi `cursorDurasi`
 	FETCH NEXT FROM cursorDurasi INTO @temp_nik, @temp_nama, @temp_validasi, @temp_cek, @temp_vaksin
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-		INSERT INTO @result --masukkan ke tabel result
+		INSERT INTO @result 
 		SELECT @temp_nik, @temp_nama, abs(datediff(minute, @temp_validasi, @temp_cek)), abs(datediff(minute, @temp_cek, @temp_vaksin)) --hitung selisih waktu: validasi dan cek, cek dan vaksinasi
 
 		FETCH NEXT FROM cursorDurasi INTO @temp_nik, @temp_nama, @temp_validasi, @temp_cek, @temp_vaksin

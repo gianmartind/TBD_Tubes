@@ -1,5 +1,5 @@
 DROP PROCEDURE IF EXISTS insertPetugas
-
+--cara kerja sama dengan `insertPenduduk`, hanya berbeda parameter
 CREATE PROCEDURE insertPetugas
 	@nik varchar(50), 
 	@nama varchar(50),

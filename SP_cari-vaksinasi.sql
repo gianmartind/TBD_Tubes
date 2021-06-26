@@ -51,10 +51,6 @@ AS
 		CLOSE cursorSplit
 		DEALLOCATE cursorSplit
 
-		SELECT @col_name
-		SELECT @col_op
-		SELECT @col_value
-
 		IF(@col_op = 'LIKE')
 		BEGIN
 			SET @queryWHERE = concat(@queryWHERE, ' ',@col_name, ' ', @col_op, ' ''%', @col_value, '%''', ' AND')
@@ -79,5 +75,4 @@ AS
 
 EXEC cariVaksinasi 'nama|LIKE|aa&nik|=|10000000'
 
-SELECT idVaksinasi, tanggalWaktu, tahap, namaFaskes, nik, nama, email, noHP, tanggalLahir, pekerjaan  FROM TB_Vaksinasi INNER JOIN TB_Penduduk ON TB_Vaksinasi.fk_nik = TB_Penduduk.nik INNER JOIN TB_Faskes ON TB_Vaksinasi.fk_idFaskes = TB_Faskes.idFaskes WHERE namaLIKE'%aa%' AND 1>0
 

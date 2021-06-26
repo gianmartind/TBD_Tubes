@@ -1,5 +1,5 @@
 DROP PROCEDURE IF EXISTS insertFaskes
-
+--cara kerja sama dengan `insertPenduduk`, hanya berbeda parameter
 CREATE PROCEDURE insertFaskes
 	@nama varchar(50),
 	@kapasitas int,

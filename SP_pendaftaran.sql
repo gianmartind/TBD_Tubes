@@ -48,7 +48,7 @@ AS
 
 			BREAK --keluar dari while
 		END
-
+		--jika pada tanggal @date, kapasitas sudah penuh
 		SET @date = dateadd(day, 1, @date) --tambah satu hari ke variabel @date
 	END
 
