@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS insertPetugas
 
 CREATE PROCEDURE insertPetugas
-	@nik varchar(50),
+	@nik varchar(50), 
 	@nama varchar(50),
 	@email varchar(50),
 	@noHP varchar(50),

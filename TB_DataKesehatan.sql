@@ -17,6 +17,7 @@ CREATE TABLE [dbo].[TB_DataKesehatan](
 	[tanggalWaktu] [datetime] NOT NULL,
 	[fk_nik] [varchar](50) NOT NULL,
 	[fk_idPetugas] [int] NOT NULL,
+	[fk_idFaskes] [int] NOT NULL
  CONSTRAINT [PK_TB_DataKesehatan] PRIMARY KEY CLUSTERED 
 (
 	[idDataKesehatan] ASC
@@ -36,5 +37,12 @@ REFERENCES [dbo].[TB_Penduduk] ([nik])
 GO
 
 ALTER TABLE [dbo].[TB_DataKesehatan] CHECK CONSTRAINT [FK_TB_DataKesehatan_nik]
+GO
+
+ALTER TABLE [dbo].[TB_DataKesehatan]  WITH CHECK ADD  CONSTRAINT [FK_TB_DataKesehatan_idFaskes] FOREIGN KEY([fk_idFaskes])
+REFERENCES [dbo].[TB_Faskes] ([idFaskes])
+GO
+
+ALTER TABLE [dbo].[TB_DataKesehatan] CHECK CONSTRAINT [FK_TB_DataKesehatan_idFaskes]
 GO
 

@@ -13,6 +13,7 @@ CREATE TABLE [dbo].[TB_Validasi](
 	[tanggalWaktu] [datetime] NOT NULL,
 	[keterangan] [varchar](50) NOT NULL,
 	[fk_nik] [varchar](50) NOT NULL,
+	[fk_idFaskes] [int] NOT NULL
  CONSTRAINT [PK_TB_Validasi] PRIMARY KEY CLUSTERED 
 (
 	[idValidasi] ASC
@@ -25,5 +26,12 @@ REFERENCES [dbo].[TB_Penduduk] ([nik])
 GO
 
 ALTER TABLE [dbo].[TB_Validasi] CHECK CONSTRAINT [FK_TB_Validasi_nik]
+GO
+
+ALTER TABLE [dbo].[TB_Validasi]  WITH CHECK ADD  CONSTRAINT [FK_TB_Validasi_idFaskes] FOREIGN KEY([fk_idFaskes])
+REFERENCES [dbo].[TB_Faskes] ([idFaskes])
+GO
+
+ALTER TABLE [dbo].[TB_Validasi] CHECK CONSTRAINT [FK_TB_Validasi_idFaskes]
 GO
 

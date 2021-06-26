@@ -1,14 +1,10 @@
-DROP PROCEDURE IF EXISTS cariData
+DROP PROCEDURE IF EXISTS cariPendaftaran
 
-CREATE PROCEDURE cariData
-	@input varchar(MAX)
+CREATE PROCEDURE cariPendaftaran
+	@input varchar(MAX) --input kolom yang akan di-filter
 AS
 	DECLARE @temp TABLE(
 		kata varchar(50)
-	)
-
-	DECLARE @temp2 TABLE(
-		temp varchar(50)
 	)
 
 	INSERT INTO @temp
@@ -45,7 +41,7 @@ AS
 		DECLARE cursorSplit CURSOR
 		FOR 
 		SELECT value
-		FROM string_split(@temp_input, ' ')
+		FROM string_split(@temp_input, '|')
 
 		OPEN cursorSplit
 
@@ -55,15 +51,18 @@ AS
 		CLOSE cursorSplit
 		DEALLOCATE cursorSplit
 
-		INSERT INTO @temp2
 		SELECT @col_name
-		INSERT INTO @temp2
 		SELECT @col_op
-		INSERT INTO @temp2
 		SELECT @col_value
 
-		--SET @querySELECT = concat(@querySELECT, ' ', @col_name, ',')
-		SET @queryWHERE = concat(@queryWHERE, ' ',@col_name, @col_op, '''', @col_value, '''', ' AND')
+		IF(@col_op = 'LIKE')
+		BEGIN
+			SET @queryWHERE = concat(@queryWHERE, ' ',@col_name, ' ', @col_op, ' ''%', @col_value, '%''', ' AND')
+		END
+		ELSE
+		BEGIN
+			SET @queryWHERE = concat(@queryWHERE, ' ',@col_name, ' ', @col_op, ' ''', @col_value, '''', ' AND')
+		END
 
 		FETCH NEXT FROM cursorInput INTO @temp_input
 	END
@@ -71,7 +70,6 @@ AS
 	CLOSE cursorInput
 	DEALLOCATE cursorInput
 
-	--SET @querySELECT = LEFT(@querySELECT, len(@querySELECT) - 1)
 	SET @queryWHERE = concat(@queryWHERE, ' 1>0')
 
 	SET @query = concat(@querySELECT, @queryFROM, @queryWHERE)
@@ -79,5 +77,5 @@ AS
 	EXEC sp_executesql @query
 
 
-EXEC cariData 'namaFaskes|=|RS Bandung&nik|=|&;tanggalWaktu|<|2021-06-25'
+EXEC cariPendaftaran'namaFaskes|=|RS Bandung&tanggalWaktu|<|2021-06-25&nama|=|Nama Penduduk&idPendaftaran|=|7'
 

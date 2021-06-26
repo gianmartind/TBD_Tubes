@@ -1,7 +1,7 @@
 USE [master]
 GO
 
-/****** Object:  Table [dbo].[TB_Pendaftaran]    Script Date: 22/06/2021 20:06:38 ******/
+/****** Object:  Table [dbo].[TB_Pendaftaran]    Script Date: 26/06/2021 17:23:42 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -11,6 +11,7 @@ GO
 CREATE TABLE [dbo].[TB_Pendaftaran](
 	[idPendaftaran] [int] IDENTITY(1,1) NOT NULL,
 	[tanggalWaktu] [datetime] NOT NULL,
+	[tanggalDaftar] [datetime] NOT NULL,
 	[fk_nik] [varchar](50) NOT NULL,
 	[fk_idFaskes] [int] NOT NULL,
  CONSTRAINT [PK_TB_Pendaftaran] PRIMARY KEY CLUSTERED 
@@ -33,4 +34,5 @@ GO
 
 ALTER TABLE [dbo].[TB_Pendaftaran] CHECK CONSTRAINT [FK_TB_Pendaftaran_nik]
 GO
+
 

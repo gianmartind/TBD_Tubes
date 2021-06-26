@@ -7,55 +7,55 @@ CREATE PROCEDURE pendaftaran
 	@jumlah int, --jumlah jadwal (1 atau 2)
 	@interval int --jarak antara jadwal 1 dan jadwal 2
 AS
-	DECLARE @kapasitas int=0
+	DECLARE @kapasitas int=0 --untuk menyimpan kapasitas dari faskes yang dipilih
 
-	SELECT @kapasitas = kapasitas
+	SELECT @kapasitas = kapasitas --masukkan kapasitas faskes
 	FROM TB_Faskes
 	WHERE idFaskes = @idFaskes
 
-	DECLARE @countDate int=0
+	DECLARE @countDate int=0 --hitung jumlah pendaftaran aktif yang dimiliki oleh pendaftar
 	SELECT @countDate = count(*)
 	FROM TB_Pendaftaran
-	WHERE fk_nik = @nik AND tanggalWaktu >= getdate() 
+	WHERE fk_nik = @nik AND fk_idFaskes = @idFaskes AND tanggalWaktu >= getdate() --cek nik pendaftar, idFaskes, dan tanggal yang lebih dari tanggal saat ini 
 
-	IF(@countDate > 0)
+	IF(@countDate > 0) --
 	BEGIN
 		SELECT 'Anda masih memiliki jadwal'
 		RETURN
 	END
 
-	DECLARE @date date=convert(date, getdate())
-	SET @date = dateadd(day, @hari, @date)
+	DECLARE @date date=convert(date, getdate()) --tanggal untuk diiterasi
+	SET @date = dateadd(day, @hari, @date) --dimulai dari tanggal sekarang ditambah nilai dari paramater @hari
 
-	DECLARE @countPendaftar int=0
+	DECLARE @countPendaftar int=0 --jumlah pendaftar pada pada tanggal @date
 
-	DECLARE @datetime datetime='2021/06/22 22:38:14'
+	DECLARE @datetime datetime --variabel untuk mengubah format `date` pada @date menjadi `datetime`
 
 	WHILE(1>0)
 	BEGIN
-		SELECT @countPendaftar = count(*)
+		SELECT @countPendaftar = count(*) --hitung jumlah pendaftar pada Faskes @idFaskes dan tanggal @date
 		FROM TB_Pendaftaran INNER JOIN (SELECT * FROM TB_Faskes WHERE idFaskes = @idFaskes) as Faskes ON TB_Pendaftaran.fk_idFaskes = Faskes.idFaskes
 		WHERE convert(date, TB_Pendaftaran.tanggalWaktu) = @date
 
-		IF(@countPendaftar < @kapasitas)
+		IF(@countPendaftar < @kapasitas) --jika masih terdapat slot 
 		BEGIN
-			SET @datetime = convert(datetime, (convert(varchar(50), @date) + ' 08:00:00'))
+			SET @datetime = convert(datetime, (convert(varchar(50), @date) + ' 08:00:00')) --buat variabel datetime dari @date, dengan jam 08:00
 
-			INSERT INTO TB_Pendaftaran (tanggalWaktu, fk_nik, fk_idFaskes)
-			VALUES (@datetime, @nik, @idFaskes)
+			INSERT INTO TB_Pendaftaran (tanggalWaktu, tanggalDaftar, fk_nik, fk_idFaskes) --masukkan ke dalam tabel TB_Pendaftaran
+			VALUES (@datetime, getdate(), @nik, @idFaskes)
 
 			SELECT 'Tanggal Vaksinasi (1) - ' + convert(varchar(50), @datetime)
 
-			BREAK
+			BREAK --keluar dari while
 		END
 
-		SET @date = dateadd(day, 1, @date)
+		SET @date = dateadd(day, 1, @date) --tambah satu hari ke variabel @date
 	END
 
-	IF(@jumlah = 2)
+	IF(@jumlah = 2) --jika diinginkan 2 tanggal 
 	BEGIN
-		SET @date = dateadd(day, @interval, @date)
-		WHILE(1>0)
+		SET @date = dateadd(day, @interval, @date) --tambah hari di variabel @date dengan @interval
+		WHILE(1>0) --lakukan iterasi yang sama seperti di atas
 		BEGIN
 			SELECT @countPendaftar = count(*)
 			FROM TB_Pendaftaran INNER JOIN (SELECT * FROM TB_Faskes WHERE idFaskes = @idFaskes) as Faskes ON TB_Pendaftaran.fk_idFaskes = Faskes.idFaskes
@@ -65,8 +65,8 @@ AS
 			BEGIN
 				SET @datetime = convert(datetime, (convert(varchar(50), @date) + ' 08:00:00'))
 
-				INSERT INTO TB_Pendaftaran (tanggalWaktu, fk_nik, fk_idFaskes)
-				VALUES (@datetime, @nik, @idFaskes)
+				INSERT INTO TB_Pendaftaran (tanggalWaktu, tanggalDaftar, fk_nik, fk_idFaskes)
+				VALUES (@datetime, getdate(), @nik, @idFaskes)
 
 				SELECT 'Tanggal Vaksinasi (2) - ' + convert(varchar(50), @datetime)
 
