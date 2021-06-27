@@ -1,12 +1,21 @@
 DROP PROCEDURE IF EXISTS validasi
+GO
 
 CREATE PROCEDURE validasi
+	@tanggalWaktu datetime,
 	@nik varchar(50), --nik pendaftar
 	@idFaskes int --id faskes
 AS
 	DECLARE @currentDate date --ambil tanggal saat ini
 
-	SET @currentDate = convert(date, getdate()) --convert menjadi format date
+	IF(@tanggalWaktu IS NULL)
+	BEGIN
+		SET @currentDate = convert(date, getdate()) --convert menjadi format date
+	END
+	ELSE
+	BEGIN
+		SET @currentDate = @tanggalWaktu
+	END
 
 	DECLARE @countEntry int = 0
 
@@ -30,8 +39,9 @@ AS
 
 		SELECT 'TIDAK VALID'
 	END
+GO
 
-EXEC validasi '1', 2
+EXEC validasi null, '10000000', 2
 	
 
 

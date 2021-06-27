@@ -1,4 +1,5 @@
 DROP PROCEDURE IF EXISTS pendaftaran
+GO
 
 CREATE PROCEDURE pendaftaran
 	@nik varchar(50), --nik pendaftar
@@ -76,6 +77,7 @@ AS
 			SET @date = dateadd(day, 1, @date)
 		END
 	END
-	
+GO
+
 EXEC pendaftaran '0006', 2, 7, 2, 14
 

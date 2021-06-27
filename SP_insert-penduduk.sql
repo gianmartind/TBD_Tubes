@@ -1,4 +1,5 @@
 DROP PROCEDURE IF EXISTS insertPenduduk
+GO
 
 CREATE PROCEDURE insertPenduduk
 	@nik varchar(50), --nik penduduk
@@ -25,6 +26,7 @@ AS
 
 	INSERT INTO TB_Penduduk --insert ke tabel TB_Penduduk
 	VALUES (@nik, @nama, @email, @noHP, @tanggalLahir, @pekerjaan, @idAlamatTemp)
+GO
 
 EXEC insertPenduduk '0006', 'Nama Penduduk 3', 'email.penduduk3@gmail.com', '089415226984', '2000/04/01', 'Menganggur', 'Jl. Alamat 4', 'Bandung'
 

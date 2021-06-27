@@ -1,4 +1,5 @@
 DROP PROCEDURE IF EXISTS dataPendaftar
+GO
 
 CREATE PROCEDURE dataPendaftar
 	@input varchar(50) --input, kolom yang ingin ditampilkan
@@ -45,5 +46,7 @@ AS
 	SET @query = concat(@query, ' FROM TB_Pendaftaran INNER JOIN TB_Penduduk ON TB_Pendaftaran.fk_nik = TB_Penduduk.nik INNER JOIN TB_Faskes ON TB_Pendaftaran.fk_idFaskes = TB_Faskes.idFaskes INNER JOIN TB_Alamat ON TB_Penduduk.fk_idAlamat = TB_Alamat.idAlamat')
 
 	EXEC sp_executesql @query
+GO
+
 
 EXEC dataPendaftar 'nama;namaFaskes;namaAlamat;nik'

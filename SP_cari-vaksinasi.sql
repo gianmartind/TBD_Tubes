@@ -1,4 +1,5 @@
 DROP PROCEDURE IF EXISTS cariVaksinasi
+GO
 
 CREATE PROCEDURE cariVaksinasi
 	@input varchar(MAX)
@@ -71,7 +72,7 @@ AS
 	SET @query = concat(@querySELECT, @queryFROM, @queryWHERE)
 
 	EXEC sp_executesql @query
-
+GO
 
 EXEC cariVaksinasi 'nama|LIKE|aa&nik|=|10000000'
 

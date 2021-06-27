@@ -1,4 +1,5 @@
 DROP PROCEDURE IF EXISTS cariPendaftaran
+GO
 
 CREATE PROCEDURE cariPendaftaran
 	@input varchar(MAX) --input kolom yang akan di-filter
@@ -80,7 +81,7 @@ AS
 	SET @query = concat(@querySELECT, @queryFROM, @queryWHERE) --gabungkan ketiga query (SELECT, FROM, WHERE)
 
 	EXEC sp_executesql @query
-
+GO
 
 EXEC cariPendaftaran'namaFaskes|=|RS Bandung&tanggalWaktu|<|2021-06-25&nama|=|Nama Penduduk&idPendaftaran|=|7'
 

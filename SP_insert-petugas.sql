@@ -1,4 +1,5 @@
 DROP PROCEDURE IF EXISTS insertPetugas
+GO
 --cara kerja sama dengan `insertPenduduk`, hanya berbeda parameter
 CREATE PROCEDURE insertPetugas
 	@nik varchar(50), 
@@ -23,6 +24,7 @@ AS
 
 	INSERT INTO TB_Petugas (nik, nama, email, noHP, tanggalLahir, fk_idAlamat)
 	VALUES (@nik, @nama, @email, @noHP, @tanggalLahir, @idAlamatTemp)
+GO
 
 EXEC insertPetugas '0001', 'Nama Petugas 3', 'email.pentugas3@gmail.com', '089415226984', '2000/04/01', 'Jl. Alamat 4', 'Bandung'
 

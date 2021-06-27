@@ -1,4 +1,5 @@
 DROP PROCEDURE IF EXISTS rekapPendaftaran
+GO
 
 CREATE PROCEDURE rekapPendaftaran
 	@groupby varchar(MAX), --kolom untuk groupby
@@ -22,6 +23,7 @@ AS
 
 	--jalankan query
 	EXEC sp_executesql @query
+GO
 
 EXEC rekapPendaftaran 'idFaskes', '2021-01-01', '2022-01-01'
 

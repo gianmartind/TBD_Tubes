@@ -1,4 +1,5 @@
 DROP PROCEDURE IF EXISTS insertFaskes
+GO
 --cara kerja sama dengan `insertPenduduk`, hanya berbeda parameter
 CREATE PROCEDURE insertFaskes
 	@nama varchar(50),
@@ -20,5 +21,6 @@ AS
 
 	INSERT INTO TB_Faskes (namaFaskes, kapasitas, fk_idAlamatFaskes)
 	VALUES (@nama, @kapasitas, @idAlamatTemp)
+GO
 
 EXEC insertFaskes 'RS Bandung', 50, 'Jl. Contoh 2', 'Bandung'

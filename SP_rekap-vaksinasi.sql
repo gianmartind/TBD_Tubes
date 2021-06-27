@@ -1,4 +1,5 @@
 DROP PROCEDURE IF EXISTS rekapVaksinasi
+GO
 
 CREATE PROCEDURE rekapVaksinasi
 	@groupby varchar(MAX), --kolom untuk groupby
@@ -22,5 +23,7 @@ AS
 
 	--jalankan query
 	EXEC sp_executesql @query
+GO
+
 
 EXEC rekapVaksinasi 'idFaskes', '2021-01-01', '2022-01-01'
