@@ -79,5 +79,5 @@ AS
 	END
 GO
 
-EXEC pendaftaran '0006', 2, 7, 2, 14
+EXEC pendaftaran '10000004', 2, 7, 2, 14
 

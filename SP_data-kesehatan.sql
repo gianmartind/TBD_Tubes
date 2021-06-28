@@ -12,6 +12,11 @@ CREATE PROCEDURE dataKesehatan
 AS
 	DECLARE @status varchar(50) = 'PASS' --status awal
 
+	IF(@tanggalWaktu IS NULL) --jika @tanggalWaktu null, maka gunakan tanggal waktu saat ini
+	BEGIN
+		SET @tanggalWaktu = getdate()
+	END
+
 	--cek suhu tubuh
 	IF(@suhuTubuh > 37.5) --jika lebih dari 37.5 maka status menjadi 'FAIL'
 	BEGIN

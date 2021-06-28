@@ -83,5 +83,5 @@ AS
 	EXEC sp_executesql @query
 GO
 
-EXEC cariPendaftaran'namaFaskes|=|RS Bandung&tanggalWaktu|<|2021-06-25&nama|=|Nama Penduduk&idPendaftaran|=|7'
+EXEC cariPendaftaran 'namaFaskes|LIKE|aa'
 
